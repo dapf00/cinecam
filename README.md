@@ -1,5 +1,5 @@
-# CineCam-Godot
-CineCam-Godot is a camera app for the CinePi-Camera. To use it, you need this [fork]() of CinePi-RAW and this [Extension]() for Godot. 
+# CineCam
+CineCam is a camera app for the CinePi-Camera. To use it, you need this [fork]() of CinePi-RAW and this [Extension]() for Godot. 
 # Build Instructions
 Download Godot 4.4dev7 or later from [here](https://godotengine.org/download/archive/).
 Build the CinePi-RAW-Fork and the Extension. Copy the .so file that you built to the /bin folder from this repository. Then launch the Godot executable that you downloaded, and then go the the folder of this repository and open then project.
