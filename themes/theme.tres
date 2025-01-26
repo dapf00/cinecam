@@ -1,0 +1,138 @@
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://cyqd00l4fxggr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpe74"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_top = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omka4"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_top = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_taxne"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_top = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ngbg"]
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="ImageTexture" id="ImageTexture_d4elb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h68f"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41, 0.41, 0.41, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_top = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhlrg"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_top = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omka4"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_kettv"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_bf6jm"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_tqlwy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jj11a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gmdth"]
+
+[sub_resource type="SystemFont" id="SystemFont_4trjg"]
+font_names = PackedStringArray("DejaVu Sans", "Noto Mono", "Noto Sans Mono", "FreeMono")
+font_weight = 600
+multichannel_signed_distance_field = true
+
+[resource]
+default_font = SubResource("SystemFont_4trjg")
+default_font_size = 19
+Button/styles/disabled = SubResource("StyleBoxFlat_tpe74")
+Button/styles/disabled_mirrored = SubResource("StyleBoxFlat_tpe74")
+Button/styles/focus = SubResource("StyleBoxFlat_tpe74")
+Button/styles/hover = SubResource("StyleBoxFlat_tpe74")
+Button/styles/hover_mirrored = SubResource("StyleBoxFlat_omka4")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_taxne")
+Button/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_taxne")
+Button/styles/normal = SubResource("StyleBoxFlat_tpe74")
+Button/styles/normal_mirrored = SubResource("StyleBoxFlat_tpe74")
+Button/styles/pressed = SubResource("StyleBoxFlat_taxne")
+Button/styles/pressed_mirrored = SubResource("StyleBoxFlat_taxne")
+Label/styles/normal = SubResource("StyleBoxFlat_2ngbg")
+OptionButton/icons/arrow = SubResource("ImageTexture_d4elb")
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_1h68f")
+OptionButton/styles/disabled_mirrored = SubResource("StyleBoxFlat_1h68f")
+OptionButton/styles/focus = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/hover_mirrored = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/hover_pressed = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/normal_mirrored = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_qhlrg")
+OptionButton/styles/pressed_mirrored = SubResource("StyleBoxFlat_qhlrg")
+Panel/styles/panel = SubResource("StyleBoxEmpty_omka4")
+PopupMenu/icons/checked = null
+PopupMenu/icons/radio_checked = SubResource("ImageTexture_kettv")
+PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_bf6jm")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_tqlwy")
+SettingsButton/base_type = &"Button"
+Window/icons/close = null
+Window/icons/close_pressed = null
+Window/styles/embedded_border = SubResource("StyleBoxEmpty_jj11a")
+Window/styles/embedded_unfocused_border = SubResource("StyleBoxEmpty_gmdth")

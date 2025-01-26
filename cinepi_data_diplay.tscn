@@ -1,0 +1,621 @@
+[gd_scene load_steps=21 format=3 uid="uid://b4r0mg7ucwxax"]
+
+[ext_resource type="Shader" uid="uid://d2pk8ajobkfuc" path="res://cinepi/shaders/yuv/cinepi_data_diplay.gdshader" id="1_dyjoc"]
+[ext_resource type="Script" uid="uid://cngj1pp4xeaxv" path="res://script/display.gd" id="2_6dqcf"]
+[ext_resource type="Theme" uid="uid://cyqd00l4fxggr" path="res://themes/theme.tres" id="2_xxvth"]
+[ext_resource type="Script" uid="uid://cvtg8tvvlvmr8" path="res://script/grid_view.gd" id="3_1vaut"]
+[ext_resource type="Script" uid="uid://bmejyuw1skppi" path="res://script/cine_pi_display.gd" id="3_jv15b"]
+[ext_resource type="Texture2D" uid="uid://b2dhwisfbeyom" path="res://icons/grid-2.svg" id="3_q8tur"]
+[ext_resource type="Texture2D" uid="uid://cbf1qodyru533" path="res://icons/gear-xxl.png" id="3_vmb2x"]
+[ext_resource type="Texture2D" uid="uid://64365t30tp6x" path="res://icons/record-2.svg" id="3_xl5qm"]
+[ext_resource type="Script" uid="uid://ce8jv1iticlad" path="res://script/settings_button.gd" id="5_1u2bp"]
+[ext_resource type="Texture2D" uid="uid://c3365iye4wp8q" path="res://icons/record-3.svg" id="5_12fcj"]
+[ext_resource type="Script" uid="uid://bgmmhfui14kmb" path="res://script/godot_fps.gd" id="6_e0twy"]
+[ext_resource type="Texture2D" uid="uid://bcjecv6ydv756" path="res://icons/record-4.svg" id="6_o657h"]
+[ext_resource type="Script" uid="uid://blvcmi2jilkf7" path="res://script/record_button.gd" id="7_o657h"]
+[ext_resource type="Script" uid="uid://r2aj2ueo1cxa" path="res://script/settings_view.gd" id="10_jp00p"]
+[ext_resource type="Script" uid="uid://dova1kq11ywii" path="res://script/button.gd" id="15_wrm7c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n52fj"]
+shader = ExtResource("1_dyjoc")
+shader_parameter/Width = null
+
+[sub_resource type="CinePiCommands" id="CinePiCommands_wrm7c"]
+resource_local_to_scene = null
+resource_name = null
+
+[sub_resource type="SharedContext" id="SharedContext_6dqcf"]
+cinepi_commands = SubResource("CinePiCommands_wrm7c")
+cinepi_info = Object(CinePiInfo,"script":null)
+
+cinepi_metadata = Object(CinePiMetadata,"script":null)
+
+streams/raw = Object(CameraStreamInfo,"script":null)
+
+streams/isp = Object(CameraStreamInfo,"script":null)
+
+streams/lores = Object(CameraStreamInfo,"script":null)
+
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0c27o"]
+size = Vector2(2028, 1520)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_3s0dh"]
+frames = 2
+pause = true
+frame_0/texture = ExtResource("5_12fcj")
+frame_1/texture = ExtResource("6_o657h")
+frame_1/duration = 1.0
+
+[node name="ROOT" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="CANVAS" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="DISPLAY" type="Panel" parent="CANVAS"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_6dqcf")
+metadata/_edit_lock_ = true
+
+[node name="BLACK BACKGROUND" type="ColorRect" parent="CANVAS/DISPLAY"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="CinePiDisplay" type="CinePiDisplay" parent="CANVAS/DISPLAY"]
+camera_picture_stream = 1
+ycbcr_shader_mat = SubResource("ShaderMaterial_n52fj")
+shared_context = SubResource("SharedContext_6dqcf")
+material = SubResource("ShaderMaterial_n52fj")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_0c27o")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("3_jv15b")
+metadata/_edit_lock_ = true
+
+[node name="GridView" type="Node2D" parent="CANVAS/DISPLAY/CinePiDisplay"]
+visible = false
+script = ExtResource("3_1vaut")
+linesV = 4
+linesH = 4
+lineWidth = 1
+col = Color(1, 1, 1, 0.529412)
+metadata/_edit_lock_ = true
+
+[node name="NORMAL VIEW" type="HBoxContainer" parent="CANVAS"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_xxvth")
+alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="left controls" type="VBoxContainer" parent="CANVAS/NORMAL VIEW"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="EXPOSURE TIME" type="VBoxContainer" parent="CANVAS/NORMAL VIEW/left controls"]
+layout_mode = 2
+size_flags_vertical = 6
+metadata/_edit_lock_ = true
+
+[node name="ET LABEL" type="Label" parent="CANVAS/NORMAL VIEW/left controls/EXPOSURE TIME"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "ET"
+metadata/_edit_lock_ = true
+
+[node name="ET BUTTON" type="OptionButton" parent="CANVAS/NORMAL VIEW/left controls/EXPOSURE TIME"]
+layout_mode = 2
+size_flags_horizontal = 6
+selected = 1
+fit_to_longest_item = false
+item_count = 6
+popup/item_0/text = "1/30"
+popup/item_0/id = 5
+popup/item_1/text = "1/60"
+popup/item_1/id = 4
+popup/item_2/text = "1/125"
+popup/item_2/id = 3
+popup/item_3/text = "1/250"
+popup/item_3/id = 2
+popup/item_4/text = "1/500"
+popup/item_4/id = 1
+popup/item_5/text = "1/1000"
+popup/item_5/id = 5
+metadata/_edit_lock_ = true
+
+[node name="ISO" type="VBoxContainer" parent="CANVAS/NORMAL VIEW/left controls"]
+layout_mode = 2
+size_flags_vertical = 6
+metadata/_edit_lock_ = true
+
+[node name="ISO LABEL" type="Label" parent="CANVAS/NORMAL VIEW/left controls/ISO"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "ISO"
+metadata/_edit_lock_ = true
+
+[node name="ISO BUTTON" type="OptionButton" parent="CANVAS/NORMAL VIEW/left controls/ISO"]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 6
+selected = 0
+fit_to_longest_item = false
+item_count = 8
+popup/item_0/text = "100"
+popup/item_0/id = 0
+popup/item_1/text = "200"
+popup/item_1/id = 1
+popup/item_2/text = "400"
+popup/item_2/id = 2
+popup/item_3/text = "800"
+popup/item_3/id = 3
+popup/item_4/text = "1600"
+popup/item_4/id = 4
+popup/item_5/text = "3200"
+popup/item_5/id = 5
+popup/item_6/text = "6400"
+popup/item_6/id = 6
+popup/item_7/text = "auto"
+popup/item_7/id = 7
+metadata/_edit_lock_ = true
+
+[node name="LIGHT TEMPERATURE" type="VBoxContainer" parent="CANVAS/NORMAL VIEW/left controls"]
+layout_mode = 2
+size_flags_vertical = 6
+metadata/_edit_lock_ = true
+
+[node name="LT" type="Label" parent="CANVAS/NORMAL VIEW/left controls/LIGHT TEMPERATURE"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "WB"
+metadata/_edit_lock_ = true
+
+[node name="LT BUTTON" type="OptionButton" parent="CANVAS/NORMAL VIEW/left controls/LIGHT TEMPERATURE"]
+layout_mode = 2
+size_flags_horizontal = 6
+selected = 4
+fit_to_longest_item = false
+item_count = 14
+popup/item_0/text = "4800"
+popup/item_0/id = 0
+popup/item_1/text = "5200"
+popup/item_1/id = 1
+popup/item_2/text = "5600"
+popup/item_2/id = 2
+popup/item_3/text = "6000"
+popup/item_3/id = 3
+popup/item_4/text = "6400"
+popup/item_4/id = 5
+popup/item_5/text = "6800"
+popup/item_5/id = 5
+popup/item_6/text = "7200"
+popup/item_6/id = 6
+popup/item_7/text = "7600"
+popup/item_7/id = 7
+popup/item_8/text = "8000"
+popup/item_8/id = 8
+popup/item_9/text = "8600"
+popup/item_9/id = 9
+popup/item_10/text = "9000"
+popup/item_10/id = 10
+popup/item_11/text = "9400"
+popup/item_11/id = 11
+popup/item_12/text = "9800"
+popup/item_12/id = 12
+popup/item_13/text = "10200"
+popup/item_13/id = 13
+metadata/_edit_lock_ = true
+
+[node name="picture space" type="VBoxContainer" parent="CANVAS/NORMAL VIEW"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.5
+metadata/_edit_lock_ = true
+
+[node name="pad" type="Control" parent="CANVAS/NORMAL VIEW/picture space"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_lock_ = true
+
+[node name="top bar" type="HBoxContainer" parent="CANVAS/NORMAL VIEW/picture space"]
+layout_mode = 2
+alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="godot fps" type="Label" parent="CANVAS/NORMAL VIEW/picture space/top bar"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "29.9 f/s"
+script = ExtResource("6_e0twy")
+metadata/_edit_lock_ = true
+
+[node name="recording indicator" type="HBoxContainer" parent="CANVAS/NORMAL VIEW/picture space/top bar"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+metadata/_edit_lock_ = true
+
+[node name="recording icon" type="TextureRect" parent="CANVAS/NORMAL VIEW/picture space/top bar/recording indicator"]
+layout_mode = 2
+texture = ExtResource("3_xl5qm")
+expand_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="recording time" type="Label" parent="CANVAS/NORMAL VIEW/picture space/top bar/recording indicator"]
+layout_mode = 2
+text = "12:25"
+metadata/_edit_lock_ = true
+
+[node name="right controls" type="VBoxContainer" parent="CANVAS/NORMAL VIEW"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_lock_ = true
+
+[node name="SettingsButton" type="Button" parent="CANVAS/NORMAL VIEW/right controls"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+toggle_mode = true
+icon = ExtResource("3_vmb2x")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_1u2bp")
+metadata/_edit_lock_ = true
+
+[node name="RecordButton" type="Button" parent="CANVAS/NORMAL VIEW/right controls"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+size_flags_stretch_ratio = 3.83
+icon = SubResource("AnimatedTexture_3s0dh")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("7_o657h")
+metadata/_edit_lock_ = true
+
+[node name="GridButton" type="Button" parent="CANVAS/NORMAL VIEW/right controls"]
+custom_minimum_size = Vector2(64, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+toggle_mode = true
+icon = ExtResource("3_q8tur")
+icon_alignment = 1
+expand_icon = true
+metadata/_edit_lock_ = true
+
+[node name="SETTINGS VIEW" type="HBoxContainer" parent="CANVAS"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_xxvth")
+script = ExtResource("10_jp00p")
+metadata/_edit_lock_ = true
+
+[node name="INPUT BLOCKING PANEL" type="Panel" parent="CANVAS/SETTINGS VIEW"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_lock_ = true
+
+[node name="MID SECTION" type="VBoxContainer" parent="CANVAS/SETTINGS VIEW"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_lock_ = true
+
+[node name="INPUT BLOCKING PANEL" type="Panel" parent="CANVAS/SETTINGS VIEW/MID SECTION"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_lock_ = true
+
+[node name="settings panel" type="PanelContainer" parent="CANVAS/SETTINGS VIEW/MID SECTION"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_lock_ = true
+
+[node name="settings box" type="VBoxContainer" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel"]
+layout_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="options" type="GridContainer" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box"]
+layout_mode = 2
+columns = 2
+metadata/_edit_lock_ = true
+
+[node name="decode type label" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+text = "Decode Type"
+metadata/_edit_lock_ = true
+
+[node name="decody type button" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+selected = 2
+item_count = 3
+popup/item_0/text = "NONE"
+popup/item_0/id = 2
+popup/item_1/text = "CPU-DECODE"
+popup/item_1/id = 1
+popup/item_2/text = "DISPLAY-SHADER"
+popup/item_2/id = 2
+metadata/_edit_lock_ = true
+
+[node name="display stream" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+text = "Display Stream"
+metadata/_edit_lock_ = true
+
+[node name="display stream button" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+selected = 1
+item_count = 3
+popup/item_0/text = "RAW"
+popup/item_0/id = 2
+popup/item_1/text = "ISP"
+popup/item_1/id = 1
+popup/item_2/text = "LORES"
+popup/item_2/id = 2
+metadata/_edit_lock_ = true
+
+[node name="File Path" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+text = "File Path"
+metadata/_edit_lock_ = true
+
+[node name="Browse Button" type="Button" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+text = "Browse..."
+metadata/_edit_lock_ = true
+
+[node name="FileDialog" type="FileDialog" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/Browse Button"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(503, 400)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+root_subfolder = "/"
+
+[node name="AE Label" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "Auto Exposure"
+metadata/_edit_lock_ = true
+
+[node name="AE BUTTON" type="CheckButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="AE METERING MODE" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "AE Metering"
+metadata/_edit_lock_ = true
+
+[node name="AEMM PRESET BUTTON" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Center Weighted"
+popup/item_0/id = 0
+popup/item_1/text = "Spot"
+popup/item_1/id = 1
+popup/item_2/text = "Matrix"
+popup/item_2/id = 2
+metadata/_edit_lock_ = true
+
+[node name="AE CONSTRAINT MODE" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "AE Constraint"
+metadata/_edit_lock_ = true
+
+[node name="AECM PRESET BUTTON" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Normal"
+popup/item_0/id = 0
+popup/item_1/text = "Highlight"
+popup/item_1/id = 1
+popup/item_2/text = "Shadows"
+popup/item_2/id = 2
+metadata/_edit_lock_ = true
+
+[node name="AE Mode" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "AE Mode"
+metadata/_edit_lock_ = true
+
+[node name="AE Mode BUTTON" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "Normal"
+popup/item_0/id = 0
+popup/item_1/text = "Short"
+popup/item_1/id = 1
+popup/item_2/text = "Long"
+popup/item_2/id = 2
+popup/item_3/text = "Custom"
+popup/item_3/id = 3
+metadata/_edit_lock_ = true
+
+[node name="Ae Flicker Mode Label" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "AE Flicker Mode"
+metadata/_edit_lock_ = true
+
+[node name="Ae Flicker Mode Button" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "CenterWeighted"
+popup/item_0/id = 0
+popup/item_1/text = "Spot"
+popup/item_1/id = 1
+popup/item_2/text = "Matrix"
+popup/item_2/id = 2
+metadata/_edit_lock_ = true
+
+[node name="Auto White Balance" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "Auto White Balance"
+metadata/_edit_lock_ = true
+
+[node name="AWB BUTTON" type="CheckButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+size_flags_horizontal = 6
+metadata/_edit_lock_ = true
+
+[node name="Awb Mode Label" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "AWB Mode"
+metadata/_edit_lock_ = true
+
+[node name="Awb Mode Button" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+selected = 0
+item_count = 8
+popup/item_0/text = "Auto"
+popup/item_0/id = 0
+popup/item_1/text = "Incandescent"
+popup/item_1/id = 1
+popup/item_2/text = "Tungsten"
+popup/item_2/id = 2
+popup/item_3/text = "Flourescent"
+popup/item_3/id = 3
+popup/item_4/text = "Indoor"
+popup/item_4/id = 4
+popup/item_5/text = "Daylight"
+popup/item_5/id = 5
+popup/item_6/text = "Cloudy"
+popup/item_6/id = 6
+popup/item_7/text = "Custom"
+popup/item_7/id = 7
+metadata/_edit_lock_ = true
+
+[node name="Saturation Label" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "Saturation"
+metadata/_edit_lock_ = true
+
+[node name="Saturation Slider" type="HSlider" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+max_value = 2.0
+step = 0.1
+value = 1.0
+metadata/_edit_lock_ = true
+
+[node name="Gamma Label" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+text = "Gamma"
+metadata/_edit_lock_ = true
+
+[node name="Gamma Slider" type="HSlider" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+layout_mode = 2
+min_value = 2.0
+max_value = 2.4
+step = 0.1
+value = 2.2
+metadata/_edit_lock_ = true
+
+[node name="RESOLUTION" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+text = "Resolution"
+metadata/_edit_lock_ = true
+
+[node name="Resolution Button" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="FRAMERATE" type="Label" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+text = "Framerate"
+metadata/_edit_lock_ = true
+
+[node name="Framerate Button" type="OptionButton" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options"]
+visible = false
+layout_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="QUIT_BUTTON" type="Button" parent="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "QUIT"
+script = ExtResource("15_wrm7c")
+
+[node name="INPUT BLOCKING PANEL2" type="Panel" parent="CANVAS/SETTINGS VIEW/MID SECTION"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_lock_ = true
+
+[node name="KEEP SETTINS BUTTON FREE" type="VSplitContainer" parent="CANVAS/SETTINGS VIEW"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_lock_ = true
+
+[node name="INPUT BLOCKING PANEL" type="Panel" parent="CANVAS/SETTINGS VIEW/KEEP SETTINS BUTTON FREE"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+metadata/_edit_lock_ = true
+
+[connection signal="item_rect_changed" from="CANVAS/DISPLAY/CinePiDisplay" to="CANVAS/DISPLAY/CinePiDisplay/GridView" method="_on_cine_pi_display_item_rect_changed"]
+[connection signal="resized" from="CANVAS/DISPLAY/CinePiDisplay" to="CANVAS/DISPLAY/CinePiDisplay/GridView" method="_on_cine_pi_display_resized"]
+[connection signal="size_flags_changed" from="CANVAS/DISPLAY/CinePiDisplay" to="CANVAS/DISPLAY/CinePiDisplay/GridView" method="_on_cine_pi_display_size_flags_changed"]
+[connection signal="item_selected" from="CANVAS/NORMAL VIEW/left controls/EXPOSURE TIME/ET BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_et_button_item_selected"]
+[connection signal="item_selected" from="CANVAS/NORMAL VIEW/left controls/ISO/ISO BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_iso_button_item_selected"]
+[connection signal="item_selected" from="CANVAS/NORMAL VIEW/left controls/LIGHT TEMPERATURE/LT BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_lt_button_item_selected"]
+[connection signal="custom_pressed" from="CANVAS/NORMAL VIEW/right controls/SettingsButton" to="CANVAS/SETTINGS VIEW" method="_on_settings_button_custom_pressed"]
+[connection signal="pressed" from="CANVAS/NORMAL VIEW/right controls/RecordButton" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_record_button_pressed"]
+[connection signal="pressed" from="CANVAS/NORMAL VIEW/right controls/RecordButton" to="CANVAS/NORMAL VIEW/right controls/RecordButton" method="_on_pressed"]
+[connection signal="toggled" from="CANVAS/NORMAL VIEW/right controls/GridButton" to="CANVAS/DISPLAY/CinePiDisplay/GridView" method="_on_grid_button_toggled"]
+[connection signal="toggled" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/AE BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_ae_button_toggled"]
+[connection signal="item_selected" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/AEMM PRESET BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_aemm_preset_button_item_selected"]
+[connection signal="item_selected" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/AECM PRESET BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_aecm_preset_button_item_selected"]
+[connection signal="item_selected" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/AE Mode BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_ae_mode_button_item_selected"]
+[connection signal="item_selected" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/Ae Flicker Mode Button" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_ae_flicker_mode_button_item_selected"]
+[connection signal="toggled" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/AWB BUTTON" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_awb_button_toggled"]
+[connection signal="item_selected" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/Awb Mode Button" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_awb_mode_button_item_selected"]
+[connection signal="value_changed" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/Saturation Slider" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_saturation_slider_value_changed"]
+[connection signal="value_changed" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/options/Gamma Slider" to="CANVAS/DISPLAY/CinePiDisplay" method="_on_gamma_slider_value_changed"]
+[connection signal="pressed" from="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/QUIT_BUTTON" to="CANVAS/SETTINGS VIEW/MID SECTION/settings panel/settings box/QUIT_BUTTON" method="_on_pressed"]

@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "cinepi_library_init"
+compatibility_minimum = "4.3"
+
+[libraries]
+
+linux.debug.arm64 = "res://bin/libcinepi-gd.linux.template_debug.arm64.so"
+linux.release.arm64 = "res://bin/libcinepi-gd.linux.template_release.arm64.so"
